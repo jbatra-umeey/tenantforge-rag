@@ -1,0 +1,17 @@
+groups:
+  - name: tenantforge
+    rules:
+      - alert: RAGHighErrorRate
+        expr: sum(rate(tenantforge_http_requests_total{status=~"5.."}[5m])) / clamp_min(sum(rate(tenantforge_http_requests_total[5m])), 0.01) > 0.01
+        for: 5m
+        labels: {severity: warning}
+        annotations: {summary: "More than 1% server errors; check DB and provider availability."}
+      - alert: RAGSlowQueries
+        expr: histogram_quantile(0.95, sum by (le) (rate(tenantforge_http_seconds_bucket{route="/v1/query"}[5m]))) > 5
+        for: 10m
+        labels: {severity: warning}
+        annotations: {summary: "Query p95 exceeds the provisional five-second objective."}
+      - alert: RAGDeadLetters
+        expr: sum(increase(tenantforge_jobs_total{outcome="dead"}[15m])) > 5
+        labels: {severity: warning}
+        annotations: {summary: "Repeated ingestion failures require inspection."}
