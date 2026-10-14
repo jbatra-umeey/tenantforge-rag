@@ -1,0 +1,6 @@
+{
+  "name": "tenantforge-browser-checks",
+  "private": true,
+  "scripts": {"test:browser": "node scripts/browser_smoke.cjs"},
+  "devDependencies": {"playwright": "1.62.1"}
+}

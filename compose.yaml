@@ -1,0 +1,59 @@
+name: tenantforge
+x-common: &common
+  build: .
+  environment: &env
+    TF_DATABASE_URL: postgresql+psycopg://rag_app:local-app-only@db:5432/tenantforge
+    TF_STORAGE_DIR: /app/data/objects
+    TF_EMBEDDING_BACKEND: hash
+    TF_EMBEDDING_MODEL: hash-v1
+    TF_EMBEDDING_DIMENSIONS: "384"
+    TF_JWT_SECRET: local-demo-only-replace-before-sharing-32-bytes
+  volumes:
+    - objects:/app/data
+  restart: unless-stopped
+services:
+  db:
+    image: pgvector/pgvector:0.8.0-pg17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: local-admin-only
+      POSTGRES_DB: tenantforge
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./infra/postgres/init.sql:/docker-entrypoint-initdb.d/01-roles.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tenantforge"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  migrate:
+    <<: *common
+    environment:
+      <<: *env
+      TF_DATABASE_URL: postgresql+psycopg://postgres:local-admin-only@db:5432/tenantforge
+    command: ["python", "-m", "tenantforge", "init", "--tenant", "acme"]
+    depends_on:
+      db: {condition: service_healthy}
+    restart: "no"
+  api:
+    <<: *common
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/readyz')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  worker:
+    <<: *common
+    environment:
+      <<: *env
+      TF_DATABASE_URL: postgresql+psycopg://rag_worker:local-worker-only@db:5432/tenantforge
+    command: ["python", "-m", "tenantforge", "worker"]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+volumes:
+  postgres:
+  objects:
