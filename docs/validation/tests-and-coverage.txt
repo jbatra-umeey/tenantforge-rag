@@ -1,0 +1,24 @@
+.................................sssss........................           [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.14-final-0 _______________
+
+Name                         Stmts   Miss  Cover   Missing
+----------------------------------------------------------
+tenantforge/__init__.py          0      0   100%
+tenantforge/__main__.py         59     59     0%   1-68
+tenantforge/api.py             162     13    92%   44, 52, 69-70, 80, 85-86, 127, 139, 146-147, 152, 194
+tenantforge/auth.py             42      4    90%   39, 41, 43, 52
+tenantforge/config.py           87     23    74%   50-57, 65, 67, 69, 71, 74, 76, 78, 80, 82, 84, 86, 90-93
+tenantforge/db.py              105     32    70%   97, 108-109, 112-133, 169-172, 174-181
+tenantforge/errors.py            5      0   100%
+tenantforge/maintenance.py      15     15     0%   1-25
+tenantforge/processing.py      136     13    90%   48, 50, 58, 79, 85, 89, 96, 130-131, 148, 154, 159-160
+tenantforge/providers.py       139      8    94%   76, 78-80, 117-120
+tenantforge/retrieval.py        49      8    84%   32-42, 52
+tenantforge/service.py         184     15    92%   101-103, 112, 136-138, 178, 203, 205, 232, 242-248
+tenantforge/storage.py          49     10    80%   14-16, 28, 35, 49-53, 59
+tenantforge/telemetry.py        22      8    64%   21-28
+tenantforge/worker.py          109     11    90%   134-145
+----------------------------------------------------------
+TOTAL                         1163    219    81%
+57 passed, 5 skipped, 1 warning in 22.32s

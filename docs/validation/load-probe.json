@@ -1,0 +1,16 @@
+{
+  "requests": 20,
+  "concurrency": 4,
+  "cold": false,
+  "duration_seconds": 0.2,
+  "throughput_rps": 99.36,
+  "latency_ms_includes_errors": {
+    "p50": 23.69,
+    "p95": 88.21,
+    "p99": 133.73
+  },
+  "statuses": {
+    "200": 20
+  },
+  "note": "Not a 100K-user capacity certification; inspect throttles/errors."
+}

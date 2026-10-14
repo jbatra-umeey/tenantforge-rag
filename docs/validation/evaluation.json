@@ -1,0 +1,81 @@
+{
+  "profile": "SQLite + hash embeddings + extractive answers",
+  "cases": 12,
+  "answer_match": 1.0,
+  "source_hit": 1.0,
+  "results": [
+    {
+      "question": "How many annual leave days do employees receive?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 13.04
+    },
+    {
+      "question": "How many unused leave days can be carried over?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 8.26
+    },
+    {
+      "question": "When must carried leave be used?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 7.78
+    },
+    {
+      "question": "How many remote work days per week are allowed?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 7.63
+    },
+    {
+      "question": "What is the home office equipment allowance?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 7.5
+    },
+    {
+      "question": "When must a P1 incident be acknowledged?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 5.78
+    },
+    {
+      "question": "How many times should transient payment failures be retried?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 6.8
+    },
+    {
+      "question": "What is the database recovery point objective?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 6.31
+    },
+    {
+      "question": "What is Atlas Enterprise storage_gb?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 6.61
+    },
+    {
+      "question": "What is the hotel reimbursement cap?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 7.95
+    },
+    {
+      "question": "Does production access require MFA?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 6.12
+    },
+    {
+      "question": "Zebras astronomy volcanoes?",
+      "answer_match": true,
+      "source_hit": true,
+      "ms": 6.67
+    }
+  ],
+  "scope": "Small synthetic regression set, not a semantic quality or production capacity benchmark"
+}
