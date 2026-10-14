@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1050" viewBox="0 0 1400 1050">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#68857c"/></marker></defs>
+<rect width="1400" height="1050" rx="24" fill="#f3f6f0"/>
+<text x="52" y="55" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#66826c">TENANTFORGE / SYSTEM ARCHITECTURE</text>
+<text x="52" y="103" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#173d37">One tenant boundary. Two independent paths.</text>
+<text x="52" y="136" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#61776c">Runnable local pipeline + PostgreSQL deployment adapter. Capacity must be measured.</text>
+<rect x="440" y="178" width="520" height="100" rx="14" fill="#dfedce" stroke="#ccdacb"/>
+<text x="462" y="212" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Browser and API clients</text>
+<text x="462" y="240" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Bearer token · file upload · question · source inspection</text>
+<path d="M700 278V311" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="390" y="312" width="620" height="110" rx="14" fill="#e5efe0" stroke="#ccdacb"/>
+<text x="412" y="346" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">API / authorization boundary</text>
+<text x="412" y="374" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Verify tenant + subject + role from signed identity</text>
+<text x="412" y="397" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Bound input · admit work · reserve tenant budgets</text>
+<path d="M440 422V452H250V478" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<path d="M960 422V452H1120V478" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<text x="62" y="469" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#66826c">ASYNCHRONOUS INGESTION</text>
+<text x="912" y="469" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#66826c">SYNCHRONOUS QUERIES</text>
+<rect x="60" y="480" width="380" height="112" rx="14" fill="#ffffff" stroke="#ccdacb"/>
+<text x="82" y="514" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Source storage + SQL job</text>
+<text x="82" y="542" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Opaque tenant-prefixed raw objects</text>
+<text x="82" y="565" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Metadata and queued work commit together</text>
+<rect x="910" y="480" width="430" height="112" rx="14" fill="#ffffff" stroke="#ccdacb"/>
+<text x="932" y="514" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Private memory + answer cache</text>
+<text x="932" y="542" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Tenant + user + history + corpus version</text>
+<text x="932" y="565" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">No cross-user conversation reuse</text>
+<path d="M250 592V621" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<path d="M1120 592V621" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="60" y="623" width="380" height="135" rx="14" fill="#ffffff" stroke="#ccdacb"/>
+<text x="82" y="657" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Independent ingestion workers</text>
+<text x="82" y="685" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Lease + fence · retries · dead letters</text>
+<text x="82" y="708" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Bounded PDF / DOCX / HTML / CSV parse</text>
+<text x="82" y="731" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Sentence chunks + batched embeddings</text>
+<rect x="910" y="623" width="430" height="135" rx="14" fill="#ffffff" stroke="#ccdacb"/>
+<text x="932" y="657" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Hybrid retrieval + reranking</text>
+<text x="932" y="685" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Tenant and metadata filters</text>
+<text x="932" y="708" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Dense vectors + lexical candidates + RRF</text>
+<text x="932" y="731" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Bounded evidence context</text>
+<rect x="475" y="589" width="400" height="165" rx="14" fill="#e5efe0" stroke="#ccdacb"/>
+<text x="497" y="623" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Shared SQL persistence</text>
+<text x="497" y="651" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Tenant metadata · chunks · vectors</text>
+<text x="497" y="674" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Jobs · budgets · private conversations</text>
+<text x="497" y="697" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">SQLite exact search for local mode</text>
+<text x="497" y="720" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">PostgreSQL RLS + pgvector for deployment</text>
+<path d="M440 690H473" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<path d="M909 690H878" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<path d="M1120 758V791" fill="none" stroke="#68857c" stroke-width="2.2" marker-end="url(#arrow)"/>
+<rect x="910" y="793" width="430" height="116" rx="14" fill="#ffffff" stroke="#ccdacb"/>
+<text x="932" y="827" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Grounded answer + citations</text>
+<text x="932" y="855" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Extractive or configured model generation</text>
+<text x="932" y="878" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Validate citation IDs and corpus revision</text>
+<rect x="60" y="810" width="815" height="99" rx="14" fill="#dfedce" stroke="#ccdacb"/>
+<text x="82" y="844" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#173d37">Cross-cutting controls</text>
+<text x="82" y="872" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Scoped storage and caches · role checks · audit events · metrics and OTLP spans</text>
+<text x="82" y="895" font-family="Arial,sans-serif" font-size="15" font-weight="400" fill="#61776c">Production gates: real IdP/S3/PG tests, model quality, load, restore and security review</text>
+<text x="60" y="967" font-family="Arial,sans-serif" font-size="17" font-weight="400" fill="#61776c">Local default: hash embeddings + extractive answers. Neural embeddings and models are configurable adapters.</text>
+<text x="60" y="1001" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#173d37">100K concurrent users is a design target, not a benchmark claim.</text>
+</svg>
