@@ -1,0 +1,5 @@
+<!doctype html><html lang="en"><head><title>Acme engineering runbook</title></head><body>
+<h1>Incident response</h1><p>A P1 incident must be acknowledged within 10 minutes. The incident commander publishes a status update every 30 minutes.</p>
+<h2>Payment retry policy</h2><p>Retry transient payment provider failures at most 3 times using exponential backoff with jitter. Do not retry invalid payment credentials. Use an idempotency key to prevent duplicate charges.</p>
+<h2>Recovery</h2><p>The database recovery point objective is 15 minutes. The database recovery time objective is 60 minutes. Restore drills run quarterly.</p>
+</body></html>
