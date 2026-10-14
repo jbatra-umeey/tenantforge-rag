@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TenantForge · Knowledge workspace</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><div class="shell"><aside>
+<a class="brand" href="/">TF<span>TenantForge<small>KNOWLEDGE PLATFORM</small></span></a>
+<div class="workspace"><span class="eyebrow">CURRENT WORKSPACE</span><h2 id="tenant">Connect workspace</h2><span id="identity">Organization-scoped knowledge</span></div>
+<nav><a class="active" href="#ask">◈ &nbsp; Ask your knowledge</a><a href="#library">▤ &nbsp; Document library</a><a href="/docs" target="_blank" rel="noreferrer">↗ &nbsp; API reference</a></nav>
+<div class="isolation"><span class="dot"></span> Tenant boundary enforced<p>Documents belong to your organization. Conversations belong to you.</p></div>
+<div class="connection"><label for="token">Workspace access token</label><input type="password" id="token" placeholder="Paste your Bearer token" autocomplete="off"><button id="connect">Connect</button><p>Use the token printed by the local demo. It stays in this tab’s memory.</p></div>
+</aside><main>
+<header><div><span class="eyebrow">YOUR DOCUMENTS. TRACEABLE ANSWERS.</span><h1>Knowledge, with evidence.</h1><p>Bring your sources together. Ask a question. Follow every citation.</p></div><span class="badge" id="mode">Awaiting connection</span></header>
+<div id="notice" class="notice" role="status">Start with <code>python -m tenantforge demo</code>, then paste the printed token.</div>
+<section class="stats"><article><span>Ready sources</span><strong id="ready-count">—</strong><small>Available for retrieval</small></article><article><span>Processing queue</span><strong id="queued-count">—</strong><small>Asynchronous ingestion</small></article><article><span>Budget units today</span><strong id="budget-count">—</strong><small>Conservative token reservations</small></article></section>
+<div class="grid"><section class="panel" id="ask"><div class="panel-title"><div><span class="eyebrow">01 / EXPLORE</span><h2>Ask your knowledge</h2></div><button id="new-chat" class="quiet">New conversation</button></div>
+<div class="chat" id="chat"><div class="empty"><span class="spark">✳</span><h3>A good answer starts with a source.</h3><p>Upload a document, wait for “ready,” then ask a question about its contents.</p><button class="suggestion" id="example">What is the annual leave policy?</button></div></div>
+<form id="question-form"><label for="question">Your question</label><textarea id="question" rows="3" maxlength="2000" placeholder="Ask about your uploaded documents…" required></textarea><div class="query-options"><input id="filter-key" placeholder="Filter key (optional)" aria-label="Metadata filter key"><input id="filter-value" placeholder="Filter value" aria-label="Metadata filter value"><select id="quality" aria-label="Answer mode"><option value="standard">Standard</option><option value="deep">Deep model route</option></select></div><div class="form-footer"><span>Answers include source references</span><button id="ask-button">Ask question ↗</button></div></form>
+</section><section class="panel" id="library"><div class="panel-title"><div><span class="eyebrow">02 / SOURCES</span><h2>Document library</h2></div><button id="refresh" class="quiet">Refresh</button></div>
+<form id="upload-form"><label class="dropzone" for="file"><span>＋</span><strong>Add a source</strong><small>PDF, DOCX, HTML, CSV, TXT · up to 10 MB</small><input type="file" id="file" accept=".pdf,.docx,.html,.htm,.csv,.txt,.md" required></label><label for="metadata">Metadata (JSON)</label><input id="metadata" value='{"department":"hr"}'><button id="upload-button">Upload & process</button></form>
+<div id="documents" class="documents"><p class="muted">Connect to see your documents.</p></div><button id="load-more" class="quiet hidden">Load more sources</button>
+<div class="source-note"><strong>Two separate paths</strong><p>Uploads enter a durable worker queue. Questions search only successfully indexed documents.</p></div></section></div>
+<footer>TenantForge RAG <span>Runnable reference implementation · capacity requires measurement</span></footer>
+</main></div><dialog id="source-dialog"><button id="close-dialog" class="quiet">Close ×</button><h2 id="source-title"></h2><p id="source-location" class="muted"></p><pre id="source-content"></pre></dialog><script src="/static/app.js" defer></script></body></html>
