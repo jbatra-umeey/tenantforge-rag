@@ -1,0 +1,14 @@
+[
+  {"question":"How many annual leave days do employees receive?","contains":"25","source":"handbook.md","filters":{"department":"hr"}},
+  {"question":"How many unused leave days can be carried over?","contains":"5","source":"handbook.md","filters":{"department":"hr"}},
+  {"question":"When must carried leave be used?","contains":"March 31","source":"handbook.md","filters":{"department":"hr"}},
+  {"question":"How many remote work days per week are allowed?","contains":"3","source":"handbook.md","filters":{}},
+  {"question":"What is the home office equipment allowance?","contains":"500","source":"handbook.md","filters":{}},
+  {"question":"When must a P1 incident be acknowledged?","contains":"10 minutes","source":"runbook.html","filters":{"department":"engineering"}},
+  {"question":"How many times should transient payment failures be retried?","contains":"3 times","source":"runbook.html","filters":{}},
+  {"question":"What is the database recovery point objective?","contains":"15 minutes","source":"runbook.html","filters":{}},
+  {"question":"What is Atlas Enterprise storage_gb?","contains":"1000","source":"products.csv","filters":{"department":"sales"}},
+  {"question":"What is the hotel reimbursement cap?","contains":"180","source":"travel-policy.pdf","filters":{}},
+  {"question":"Does production access require MFA?","contains":"MFA","source":"security-policy.docx","filters":{}},
+  {"question":"Zebras astronomy volcanoes?","abstain":true,"filters":{}}
+]
