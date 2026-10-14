@@ -1,0 +1,101 @@
+# Deployment templates: replace image, endpoints, secrets and identity bindings before applying.
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: tenantforge-config}
+data:
+  TF_ENVIRONMENT: production
+  TF_AUTH_MODE: oidc
+  TF_JWKS_URL: https://YOUR_ISSUER/.well-known/jwks.json
+  TF_JWT_ISSUER: https://YOUR_ISSUER/
+  TF_JWT_AUDIENCE: tenantforge-api
+  TF_STORAGE_BACKEND: s3
+  TF_S3_BUCKET: YOUR_PRIVATE_BUCKET
+  TF_EMBEDDING_BACKEND: openai
+  TF_EMBEDDING_MODEL: text-embedding-3-small
+  TF_EMBEDDING_DIMENSIONS: "384"
+  TF_GENERATION_BACKEND: openai
+  TF_LLM_MODEL: YOUR_CHAT_COMPLETIONS_COMPATIBLE_MODEL
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: tenantforge-api}
+spec:
+  replicas: 2
+  selector: {matchLabels: {app: tenantforge-api}}
+  template:
+    metadata: {labels: {app: tenantforge-api}}
+    spec:
+      automountServiceAccountToken: false # Set up workload identity explicitly if needed by your cloud.
+      securityContext: {runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001}
+      containers:
+        - name: api
+          image: YOUR_REGISTRY/tenantforge:0.1.0
+          ports: [{containerPort: 8000}]
+          envFrom: [{configMapRef: {name: tenantforge-config}}]
+          env:
+            - {name: TF_DATABASE_URL, valueFrom: {secretKeyRef: {name: tenantforge-secrets, key: api-database-url}}}
+            - {name: TF_PROVIDER_API_KEY, valueFrom: {secretKeyRef: {name: tenantforge-secrets, key: provider-api-key}}}
+            - {name: TF_METRICS_TOKEN, valueFrom: {secretKeyRef: {name: tenantforge-secrets, key: metrics-token}}}
+          resources: {requests: {cpu: "500m", memory: "512Mi"}, limits: {cpu: "2", memory: "1Gi"}}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          volumeMounts: [{name: tmp, mountPath: /tmp}]
+          readinessProbe: {httpGet: {path: /readyz, port: 8000}, initialDelaySeconds: 5, periodSeconds: 10}
+          livenessProbe: {httpGet: {path: /healthz, port: 8000}, initialDelaySeconds: 10, periodSeconds: 15}
+      volumes: [{name: tmp, emptyDir: {sizeLimit: 128Mi}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: tenantforge-api}
+spec:
+  selector: {app: tenantforge-api}
+  ports: [{port: 8000, targetPort: 8000}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: tenantforge-worker}
+spec:
+  replicas: 2
+  selector: {matchLabels: {app: tenantforge-worker}}
+  template:
+    metadata: {labels: {app: tenantforge-worker}}
+    spec:
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 150
+      securityContext: {runAsNonRoot: true, runAsUser: 10001, runAsGroup: 10001}
+      containers:
+        - name: worker
+          image: YOUR_REGISTRY/tenantforge:0.1.0
+          command: [python, -m, tenantforge, worker]
+          ports: [{containerPort: 9101}]
+          envFrom: [{configMapRef: {name: tenantforge-config}}]
+          env:
+            - {name: TF_DATABASE_URL, valueFrom: {secretKeyRef: {name: tenantforge-secrets, key: worker-database-url}}}
+            - {name: TF_PROVIDER_API_KEY, valueFrom: {secretKeyRef: {name: tenantforge-secrets, key: provider-api-key}}}
+            - {name: TF_METRICS_TOKEN, valueFrom: {secretKeyRef: {name: tenantforge-secrets, key: metrics-token}}}
+          resources: {requests: {cpu: "500m", memory: "768Mi"}, limits: {cpu: "2", memory: "2Gi"}}
+          securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+          volumeMounts: [{name: tmp, mountPath: /tmp}]
+          livenessProbe:
+            exec:
+              command: [python, -c, "import pathlib,time; assert time.time()-pathlib.Path('/tmp/tenantforge-worker-health').stat().st_mtime < 300"]
+            initialDelaySeconds: 30
+            periodSeconds: 30
+      volumes: [{name: tmp, emptyDir: {sizeLimit: 256Mi}}]
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: {name: tenantforge-api}
+spec:
+  scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: tenantforge-api}
+  minReplicas: 2
+  maxReplicas: 20 # Initial template bound; NOT a 100K-user sizing result.
+  metrics:
+    - type: Resource
+      resource: {name: cpu, target: {type: Utilization, averageUtilization: 60}}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata: {name: tenantforge-api}
+spec:
+  minAvailable: 1
+  selector: {matchLabels: {app: tenantforge-api}}
